@@ -1,5 +1,5 @@
-ruby-rainbow (1.1.4-1) UNRELEASED; urgency=low
+ruby-rainbow (1.1.4-1) experimental; urgency=low
 
-  * Initial release (Closes: #nnnn)
+  * Initial release (Closes: #708532)
 
- -- niteshjain-guest <niteshjain92@gmail.com>  Mon, 20 May 2013 18:40:33 +0530
+ -- Nitesh A Jain <niteshjain92@gmail.com>  Thu, 16 May 2013 17:16:31 +0530
