@@ -1,4 +1,4 @@
-ruby-rainbow (1.1.4-1) experimental; urgency=low
+ruby-rainbow (1.1.4-1) unstable; urgency=low
 
   * Initial release (Closes: #708532)
 
