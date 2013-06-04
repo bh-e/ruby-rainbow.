@@ -16,6 +16,6 @@ XB-Ruby-Versions: ${ruby:Versions}
 Depends: ${shlibs:Depends}, ${misc:Depends}, ruby | ruby-interpreter
 Description: extension of Ruby String class enabling colored text on ANSI terminals
  Rainbow extends the ruby string class to enable coloring text on 
- ANSI terminals.It adds methods to the String class and allowing 
+ ANSI terminals. It adds methods to the String class and allowing 
  the use offoreground and background color, bright, italic, underline,
  blink, reverse, hide and reset on text for ANSI terminals.
