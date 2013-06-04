@@ -5,8 +5,8 @@ Maintainer: Debian Ruby Extras Maintainers <pkg-ruby-extras-maintainers@lists.al
 Uploaders: Nitesh A Jain <niteshjain92@gmail.com>
 Build-Depends: debhelper (>= 7.0.50~), gem2deb (>= 0.3.0~)
 Standards-Version: 3.9.4
-Vcs-Git: git://git.debian.org/pkg-ruby-extras/ruby-rainbow.git
-Vcs-Browser: http://git.debian.org/?p=pkg-ruby-extras/ruby-rainbow.git;a=summary
+Vcs-Git: git://anonscm.debian.org/pkg-ruby-extras/ruby-rainbow.git
+Vcs-Browser: http://anonscm.debian.org/gitweb/?p=pkg-ruby-extras/ruby-rainbow.git;a=summary
 Homepage: https://github.com/sickill/rainbow
 XS-Ruby-Versions: all
 
@@ -14,9 +14,8 @@ Package: ruby-rainbow
 Architecture: all
 XB-Ruby-Versions: ${ruby:Versions}
 Depends: ${shlibs:Depends}, ${misc:Depends}, ruby | ruby-interpreter
-Description: Extension of Ruby String class enabling colored text on ANSI terminals
+Description: extension of Ruby String class enabling colored text on ANSI terminals
  Rainbow extends the ruby string class to enable coloring text on 
- ANSI terminals
- It adds methods to the String class and allowing the use of 
- foreground and background color, bright, italic, underline,
+ ANSI terminals.It adds methods to the String class and allowing 
+ the use offoreground and background color, bright, italic, underline,
  blink, reverse, hide and reset on text for ANSI terminals.

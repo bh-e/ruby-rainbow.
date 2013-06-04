@@ -1,1 +1,2 @@
-Dir['{spec,test}/**/*.rb'].each { |f| require f }
+ENV['CLICOLOR_FORCE']='1'
+require 'test/rainbow_test'
