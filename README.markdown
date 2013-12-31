@@ -1,75 +1,174 @@
-Rainbow
-=======
+# Rainbow
 
-![build status](https://secure.travis-ci.org/sickill/rainbow.png)
+[![Build Status](https://travis-ci.org/sickill/rainbow.png?branch=master)](https://travis-ci.org/sickill/rainbow)
+[![Code Climate](https://codeclimate.com/github/sickill/rainbow.png)](https://codeclimate.com/github/sickill/rainbow)
+[![Coverage Status](https://coveralls.io/repos/sickill/rainbow/badge.png)](https://coveralls.io/r/sickill/rainbow)
 
-About
------
+Rainbow is a ruby gem for colorizing printed text on ANSI terminals.
 
-Rainbow extends ruby String class adding methods to wrap the string with [ANSI escape codes](http://en.wikipedia.org/wiki/ANSI_escape_code).
+It provides a string presenter object, which adds several methods to your
+strings for wrapping them in [ANSI escape
+codes](http://en.wikipedia.org/wiki/ANSI_escape_code). These codes when printed
+in a terminal change text attributes like text color, background color,
+intensity etc.
 
-Features
---------
+## Usage
 
-Rainbow adds following methods to String class:
+To make your string colored wrap it with `Rainbow()` presenter and call
+`.color(<color name>)` on it.
 
-* foreground(color) (with _color_ and _colour_ aliases)
-* background(color)
-* reset
-* bright
-* italic (not well supported by terminal emulators).
-* underline
-* blink
-* inverse
-* hide.
+### Example
 
-Each of those methods returns string wrapped with some ANSI codes so you can chain calls as in example above.
+```ruby
+require 'rainbow'
 
-Color can be one of following symbols:
+p Rainbow("this is red").red + " and " + Rainbow("this on yellow bg").bg(:yellow) + " and " + Rainbow("even bright underlined!").underline.bright
 
-    :black, :red, :green, :yellow, :blue, :magenta, :cyan, :white, :default
+# => "\e[31mthis is red\e[0m and \e[43mthis on yellow bg\e[0m and \e[4m\e[1meven bright underlined!\e[0m"
+```
 
-If you have 256-colors capable terminal you can also specify color in RGB which will find the nearest match from 256 colors palette: 
+### Rainbow presenter API
 
-    "Jolacz".color(115, 23, 98)
-    "Jolacz".color("#FFC482")
-    "Jolacz".color("FFC482")
+Rainbow presenter adds the following methods to presented string:
 
-For support on Windows, you should install the following gems:
+* `color(c)` (with `foreground`, and `fg` aliases)
+* `background(c)` (with `bg` alias)
+* `bright`
+* `underline`
+* `blink`
+* `inverse`
+* `hide`
+* `italic` (not well supported by terminal emulators).
 
-  gem install windows-pr win32console
+Text color can also be changed by calling a method named by a color:
 
-If the gems aren't installed strings are simply returned unaltered.
+* `black`
+* `red`
+* `green`
+* `yellow`
+* `blue`
+* `magenta`
+* `cyan`
+* `white`
 
-Rainbow can be disabled globally by setting:
+All of the methods return `self` (the presenter object) so you can chain method
+calls:
 
-    Sickill::Rainbow.enabled = false
+```ruby
+Rainbow("hola!").blue.bright.underline
+```
 
-It will be disabled by default if it detects that STDOUT is not a TTY.
+### String mixin
 
-Installation
-------------
+If you don't like wrapping every string you want to colorize with `Rainbow()`
+you can include all the rainbow presenter methods directly in a String class by
+requiring `rainbow/ext/string`:
 
-    gem install rainbow
+```ruby
+require 'rainbow/ext/string'
 
-Usage
------
+puts "this is red".color(:red) + " and " + "this on yellow bg".background(:yellow) + " and " + "even bright underlined!".underline.bright
+```
 
-    require 'rainbow'
-    puts "this is red".foreground(:red) + " and " + "this on yellow bg".background(:yellow) + " and " + "even bright underlined!".underline.bright
+This way of using Rainbow is not recommended though as it pollutes String's
+public interface with methods that are presentation specific.
 
-Rails Usage
------------
+NOTE: the mixing doesn't include shortcut methods for changing text color, you
+should use "string".color(:blue) instead of "string".blue
 
-You're probably wanting to add colour to your logs. To do so you must explicity enable rainbow because it will detect that STDOUT (ie: the log file) is not a TTY.
-To make things easy, create the file `config/initializers/rainbow.rb` and include the following:
+NOTE: the mixin is included in String by default in rainbow versions up to (and
+including) 1.99.x to not break backwards compatibility. It won't be included by
+default in rainbow 2.0.
 
-    require 'rainbow'
-    Sickill::Rainbow.enabled = true
+### Color specification
 
-Authors
--------
+Both `color` and `background` accept color specified in any
+of the following ways:
 
-* Marcin Kulik
-* Xavier Nayrac
+* color number (where 0 is black, 1 is red, 2 is green and so on):
+  `Rainbow("hello").color(1)`
 
+* color name as a symbol (:black, :red, :green, :yellow, :blue,
+  :magenta, :cyan, :white):
+  `Rainbow("hello").color(:yellow)`.
+  This can be simplified to `Rainbow("hello").yellow`
+
+* RGB triplet as separate values in the range 0-255:
+  `Rainbow("hello").color(115, 23, 98)`
+
+* RGB triplet as a hex string:
+  `Rainbow("hello").color("FFC482")` or `Rainbow("hello").color("#FFC482")`
+
+When you specify a color with a RGB triplet rainbow finds the nearest match
+from 256 colors palette. Note that it requires a 256-colors capable terminal to
+display correctly.
+
+### Configuration
+
+Rainbow can be enabled/disabled globally by setting:
+
+```ruby
+Rainbow.enabled = true/false
+```
+
+When disabled all the methods return an unmodified string
+(`Rainbow("hello").red == "hello"`).
+
+It's enabled by default, unless STDOUT/STDERR is not a TTY or a terminal is
+dumb.
+
+### Advanced usage
+
+`Rainbow()` and `Rainbow.enabled` operate on the global Rainbow wrapper
+instance. If you would like to selectively enable/disable coloring in separate
+parts of your application you can get a new Rainbow wrapper instance for each
+of them and control the state of coloring during the runtime.
+
+```ruby
+rainbow_one = Rainbow.new
+rainbow_two = Rainbow.new
+
+rainbow_one.enabled = false
+
+Rainbow("hello").red          # => "\e[31mhello\e[0m" ("hello" if not on TTY)
+rainbow_one.wrap("hello").red # => "hello"
+rainbow_two.wrap("hello").red # => "\e[31mhello\e[0m" ("hello" if not on TTY)
+```
+
+By default each new instance inherits enabled/disabled state from the global
+`Rainbow.enabled`.
+
+This feature comes handy for example when you have multiple output formatters
+in your application and some of them print to a terminal but others write to a
+file. Normally rainbow would detect that STDIN/STDERR is a TTY and would
+colorize all the strings, even the ones that go through file writing
+formatters. You can easily solve that by disabling coloring for the Rainbow
+instances that are used by formatters with file output.
+
+## Windows support
+
+For Windows support, you should install the following gems:
+
+```ruby
+gem install windows-pr win32console
+```
+
+If the above gems aren't installed then all strings are returned unmodified.
+
+## Installation
+
+Add it to your Gemfile:
+
+```ruby
+gem 'rainbow'
+```
+
+Or just install it via rubygems:
+
+```ruby
+gem install rainbow
+```
+
+## Authors
+
+[Marcin Kulik](http://ku1ik.com/) and [great open-source contributors](https://github.com/sickill/rainbow/graphs/contributors).
