@@ -1,8 +1,12 @@
 ruby-rainbow (1.99.1-1) UNRELEASED; urgency=low
 
   * New upstream release 
+  * Moved from d/ruby-tests.rb to d/ruby-tests.rake as upstream moved to spec/
+  * Added ruby-rspec-core to build depends to fix failing tests
+  * Bump gem2deb dependency to 0.6.1~
+  * Bump standards version to 3.9.5
 
- -- Nitesh A Jain <niteshjain92@gmail.com>  Tue, 31 Dec 2013 20:03:41 +0530
+ -- Nitesh A Jain <niteshjain92@gmail.com>  Fri, 03 Jan 2014 15:32:17 +0530
 
 ruby-rainbow (1.1.4-1) unstable; urgency=low
 
