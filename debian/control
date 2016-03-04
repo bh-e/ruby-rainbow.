@@ -5,7 +5,7 @@ Maintainer: Debian Ruby Extras Maintainers <pkg-ruby-extras-maintainers@lists.al
 Uploaders: Nitesh A Jain <niteshjain92@gmail.com>
 Build-Depends: debhelper (>= 9~), gem2deb, ruby-rspec-core
 Standards-Version: 3.9.5
-Vcs-Git: https://anonscm.debian.org/pkg-ruby-extras/ruby-rainbow.git
+Vcs-Git: https://anonscm.debian.org/git/pkg-ruby-extras/ruby-rainbow.git
 Vcs-Browser: https://anonscm.debian.org/cgit/pkg-ruby-extras/ruby-rainbow.git
 Homepage: https://github.com/sickill/rainbow
 XS-Ruby-Versions: all
