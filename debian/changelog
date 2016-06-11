@@ -1,3 +1,15 @@
+ruby-rainbow (2.1.0-1) unstable; urgency=medium
+
+  * Team upload
+  * Imported Upstream version 2.1.0
+  * Bump debhelper compatibility level to 9
+  * Remove version in the gem2deb build-dependency
+  * Use https:// in Vcs-* fields
+  * Bump Standards-Version to 3.9.8 (no changes needed)
+  * Run wrap-and-sort on packaging files
+
+ -- Cédric Boutillier <boutil@debian.org>  Sat, 11 Jun 2016 23:42:37 +0200
+
 ruby-rainbow (2.0.0-1) unstable; urgency=low
 
   * New upstream release 
