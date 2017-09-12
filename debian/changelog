@@ -2,7 +2,8 @@ ruby-rainbow (2.2.2-1) unstable; urgency=medium
 
   * Team upload
   * New upstream release.
-  * Bump Standards-Version to 4.0.0
+  * Bump Standards-Version to 4.1.0
+  * New patch 01_remove_ext_dir.patch
 
  -- Abhijith PA <abhijith@openmailbox.org>  Tue, 29 Aug 2017 23:03:54 +0530
 
