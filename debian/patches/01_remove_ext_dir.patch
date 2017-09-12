@@ -1,7 +1,7 @@
 Description: Remove ext directory
  rainbow 2.2.2 introduced an 'ext' folder which makes gem2deb 
  think it is a native extension and creates an empty directory
- causing lintian to report an error. Thanks to terceiro
+ causing lintian to report an error. Thanks to terceiro for the patch
 Author: Abhijith PA <abhijith@openmailbox.org>
 Forwarded: no
 Last-Update: 2017-09-12
